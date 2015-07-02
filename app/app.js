@@ -41,7 +41,7 @@ App.controller('Main', function($scope, $http, $timeout, LxNotificationService, 
           // add dir to local list
           var user = headers('User');
           if (user && user.length > 0 && user.slice(0,4) == 'http') {
-            LxNotificationService.notify('Login Successful!');
+            LxNotificationService.success('Login Successful!');
             $scope.loggedIn = true;
             $scope.user = user;
           } else {
@@ -62,7 +62,7 @@ App.controller('Main', function($scope, $http, $timeout, LxNotificationService, 
 
     $scope.logout = function() {
       $scope.init();
-      LxNotificationService.notify('Logout Successful!');
+      LxNotificationService.success('Logout Successful!');
     };
 
     // set init variables
