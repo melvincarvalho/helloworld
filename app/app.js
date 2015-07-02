@@ -62,6 +62,7 @@ App.controller('Main', function($scope, $http, $timeout, LxNotificationService, 
 
     $scope.logout = function() {
       $scope.init();
+      LxNotificationService.notify('Logout Successful!');
     };
 
     // set init variables
