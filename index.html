@@ -1,0 +1,64 @@
+
+<!doctype html>
+<html lang="en" ng-app="HelloWorld" ng-cloak>
+
+<head>
+  <title>HelloWorld</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+
+  <style>
+    [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak, .ng-hide {
+      display: none !important;
+    }
+  </style>
+  <base target="_blank">
+  <link rel="stylesheet" href="bower_components/lumx/dist/lumx.css">
+  <link rel="stylesheet" href="bower_components/mdi/css/materialdesignicons.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="shortcut icon" type="img/png" href="images/favicon.png">
+  <link rel="manifest" href="manifest.json">
+</head>
+
+<body ng-controller="Main" flow-prevent-drop flex-container="column">
+
+  <div class="welcome row grad-bg" ng-if="!loggedIn">
+    <div class="absolute-center tc-white-1">
+      <div class="welcome-title">
+        <span class="icon icon--xl icon--flat mdi mdi-web tc-white-1"></span>
+        <span class="app-name fs-display-2">HELLO</span>
+      </div>
+      <div class="mt fs-subhead">Welcome!</div>
+      <button class="mt++ btn btn--l btn--black bgc-white-1" lx-ripple aria-label="Your personal clipboard" ng-click="TLSlogin()">
+          <span class="tc-light-blue-300">{{loginTLSButtonText}}</span>
+      </button>
+    </div>
+  </div>
+
+  <div class="welcome row grad-bg" ng-if="loggedIn">
+    <div class="absolute-center tc-white-1">
+      <div class="welcome-title">
+        <span class="icon icon--xl icon--flat mdi mdi-web tc-white-1"></span>
+        <span class="app-name fs-display-2">WELCOME!</span>
+      </div>
+      <div class="mt fs-subhead"><a href="{{user}}">{{user}}</a></div>
+      <button class="mt++ btn btn--l btn--black bgc-white-1" lx-ripple aria-label="Your personal clipboard" ng-click="logout()">
+          <span class="tc-light-blue-300">Logout</span>
+      </button>
+    </div>
+  </div>
+
+
+  <!-- Deps -->
+  <script src="bower_components/jquery/dist/jquery.min.js"></script>
+  <script src="bower_components/velocity/velocity.min.js"></script>
+  <script src="bower_components/angular/angular.min.js"></script>
+  <script src="bower_components/angular-ui/build/angular-ui.min.js"></script>
+  <script src="bower_components/lumx/dist/lumx.min.js"></script>
+  <script src="vendor/rdflib.min.js"></script>
+  <script src="vendor/common.js"></script>
+  <!-- App -->
+  <script src="app/app.js"></script>
+</body>
+
+</html>

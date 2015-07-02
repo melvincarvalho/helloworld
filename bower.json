@@ -1,0 +1,24 @@
+{
+  "name": "HelloWorld",
+  "version": "0.1.0",
+  "homepage": "https://github.com/linkeddata/helloworld",
+  "authors": [
+    "Melvin Carvalho <melvincarvalho@gmail.com>"
+  ],
+  "description": "HelloWorld",
+  "license": "MIT",
+  "keywords": "webid, linked data, helloworld, SoLiD",
+  "private": false,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "lumx": "~0.3.39",
+    "angular-ui": "~0.4.0"
+  }
+}
