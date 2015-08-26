@@ -8,9 +8,9 @@
   <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
 
   <style>
-    [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak, .ng-hide {
-      display: none !important;
-    }
+  [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak, .ng-hide {
+    display: none !important;
+  }
   </style>
   <base target="_blank">
   <link rel="stylesheet" href="bower_components/lumx/dist/lumx.css">
@@ -30,7 +30,10 @@
       </div>
       <div class="mt fs-subhead">Welcome!</div>
       <button class="mt++ btn btn--l btn--black bgc-white-1" lx-ripple aria-label="Your personal clipboard" ng-click="TLSlogin()">
-          <span class="tc-light-blue-300">{{loginTLSButtonText}}</span>
+        <span class="tc-light-blue-300">{{loginTLSButtonText}}</span>
+      </button>
+      <button class="mt++ btn btn--l btn--black bgc-white-1" lx-ripple aria-label="Your personal clipboard" ng-click="TLSlogin()">
+        <a target="_blank" href="https://linkeddata.github.io/signup/?tab=signup" class="tc-light-blue-300">Signup</a>
       </button>
     </div>
   </div>
@@ -43,7 +46,7 @@
       </div>
       <div class="mt fs-subhead"><a href="{{user}}">{{user}}</a></div>
       <button class="mt++ btn btn--l btn--black bgc-white-1" lx-ripple aria-label="Your personal clipboard" ng-click="logout()">
-          <span class="tc-light-blue-300">Logout</span>
+        <span class="tc-light-blue-300">Logout</span>
       </button>
     </div>
   </div>
