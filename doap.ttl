@@ -8,7 +8,6 @@
     <http://usefulinc.com/ns/doap#name> "Hello World" ;
     <http://usefulinc.com/ns/doap#shortdesc> "App for the SoLiD platform" ;
     <http://usefulinc.com/ns/doap#shortname> "Hello World" ;
-    <http://www.w3.org/ns/solid/app#dataSource> <../Private/> ;
     <http://www.w3.org/ns/solid/app#description> "A Hello World App for the SoLiD platform" ;
     <http://www.w3.org/ns/solid/app#homepage> <https://melvincarvalho.github.io/helloworld/> ;
     <http://www.w3.org/ns/solid/app#icon> <http://melvincarvalho.github.io/helloworld/images/icon.png> ;
