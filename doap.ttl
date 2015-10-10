@@ -1,0 +1,10 @@
+<#this>
+    <http://usefulinc.com/ns/doap#description> "A Hello World App for the SoLiD platform" ;
+    <http://usefulinc.com/ns/doap#download-page> <https://melvincarvalho.github.io/helloworld/> ;
+    <http://usefulinc.com/ns/doap#homepage> <https://melvincarvalho.github.io/helloworld/> ;
+    <http://usefulinc.com/ns/doap#license> "mit" ;
+    <http://usefulinc.com/ns/doap#maintainer> <http://melvincarvalho.com/#me> ;
+    <http://usefulinc.com/ns/doap#name> "Hello World" ;
+    <http://usefulinc.com/ns/doap#shortdesc> "App for the SoLiD platform" ;
+    <http://usefulinc.com/ns/doap#shortname> "helloworld" ;
+    a <http://usefulinc.com/ns/doap#Project> .
