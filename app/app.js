@@ -1,24 +1,24 @@
 var AUTHENDPOINT = "https://databox.me/";
 
 /**
-* The main app
-*/
+ * The main app
+ */
 var App = angular.module('HelloWorld', [
   'lumx'
 ]);
 
-App.controller('Main', function($scope, $http, $timeout, LxNotificationService, LxProgressService, LxDialogService) {
+App.controller('Main', function($scope, $http, LxNotificationService) {
 
   /**
-  * Initialize app
-  */
+   * Initialize app
+   */
   $scope.initApp = function() {
     $scope.init();
   };
 
   /**
-  * TLS Login with WebID
-  */
+   * TLS Login with WebID
+   */
   $scope.TLSlogin = function() {
     $scope.loginTLSButtonText = 'Logging in...';
     $http({
@@ -45,16 +45,16 @@ App.controller('Main', function($scope, $http, $timeout, LxNotificationService, 
   };
 
   /**
-  * Logout
-  */
+   * Logout
+   */
   $scope.logout = function() {
     $scope.init();
     LxNotificationService.success('Logout Successful!');
   };
 
   /**
-  * Initialize
-  */
+   * Initialize
+   */
   $scope.init = function() {
     $scope.initialized = true;
     $scope.loggedIn = false;
@@ -63,8 +63,8 @@ App.controller('Main', function($scope, $http, $timeout, LxNotificationService, 
 
 
   /**
-  * Main
-  */
+   * Main
+   */
   $scope.initApp();
 
 });
