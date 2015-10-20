@@ -1,8 +1,8 @@
 var AUTHENDPOINT = "https://databox.me/";
 
 /**
- * The main app
- */
+* The main app
+*/
 var App = angular.module('HelloWorld', [
   'lumx'
 ]);
@@ -10,15 +10,15 @@ var App = angular.module('HelloWorld', [
 App.controller('Main', function($scope, $http, LxNotificationService) {
 
   /**
-   * Initialize app
-   */
+  * Initialize app
+  */
   $scope.initApp = function() {
     $scope.init();
   };
 
   /**
-   * TLS Login with WebID
-   */
+  * TLS Login with WebID
+  */
   $scope.TLSlogin = function() {
     $scope.loginTLSButtonText = 'Logging in...';
     $http({
@@ -27,44 +27,55 @@ App.controller('Main', function($scope, $http, LxNotificationService) {
       withCredentials: true
     }).success(function(data, status, headers) {
       // add dir to local list
-      var user = headers('User');
-      if (user && user.length > 0 && user.slice(0,4) == 'http') {
-        LxNotificationService.success('Login Successful!');
+      var header = 'User';
+      var user = headers(header);
+      if (user && user.length > 0 && user.slice(0,header.length) == 'http') {
+        $scope.notify('Login Successful!');
         $scope.loggedIn = true;
         $scope.user = user;
       } else {
-        LxNotificationService.error('WebID-TLS authentication failed.');
-        console.log('WebID-TLS authentication failed.');
+        $scope.notify('WebID-TLS authentication failed.', 'error');
       }
       $scope.loginTLSButtonText = 'Login';
     }).error(function(data, status, headers) {
-      LxNotificationService.error('Could not connect to auth server: HTTP '+status);
-      console.log('Could not connect to auth server: HTTP '+status);
+      $scope.notify('Could not connect to auth server: HTTP '+status);
       $scope.loginTLSButtonText = 'Login';
     });
   };
 
   /**
-   * Logout
-   */
+  * Logout
+  */
   $scope.logout = function() {
     $scope.init();
-    LxNotificationService.success('Logout Successful!');
+    $scope.notify('Logout Successful!');
   };
 
   /**
-   * Initialize
-   */
+  * Initialize
+  */
   $scope.init = function() {
     $scope.initialized = true;
     $scope.loggedIn = false;
     $scope.loginTLSButtonText = "Login";
   };
 
+  /**
+  * Notify
+  * @param  {String} message the message to display
+  */
+  $scope.notify = function(message, type) {
+    console.log(message);
+    if (type === 'error') {
+      LxNotificationService.error(message);
+    } else {
+      LxNotificationService.success(message);
+    }
+  };
 
   /**
-   * Main
-   */
+  * Main
+  */
   $scope.initApp();
 
 });
