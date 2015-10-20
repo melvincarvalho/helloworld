@@ -26,10 +26,10 @@ App.controller('Main', function($scope, $http, LxNotificationService) {
       url: AUTHENDPOINT,
       withCredentials: true
     }).success(function(data, status, headers) {
-      // add dir to local list
       var header = 'User';
+      var scheme = 'http';
       var user = headers(header);
-      if (user && user.length > 0 && user.slice(0,header.length) == 'http') {
+      if (user && user.length > 0 && user.slice(0,scheme.length) === scheme) {
         $scope.notify('Login Successful!');
         $scope.loggedIn = true;
         $scope.user = user;
