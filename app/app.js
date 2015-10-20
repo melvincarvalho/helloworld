@@ -63,6 +63,7 @@ App.controller('Main', function($scope, $http, LxNotificationService) {
   /**
   * Notify
   * @param  {String} message the message to display
+  * @param  {String} type the type of notification, error or success
   */
   $scope.notify = function(message, type) {
     console.log(message);
