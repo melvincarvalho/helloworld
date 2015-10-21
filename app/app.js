@@ -1,5 +1,3 @@
-var AUTHENDPOINT = "https://databox.me/";
-
 /**
 * The main app
 */
@@ -20,6 +18,7 @@ App.controller('Main', function($scope, $http, LxNotificationService) {
   * TLS Login with WebID
   */
   $scope.TLSlogin = function() {
+    var AUTHENDPOINT = "https://databox.me/";
     $scope.loginTLSButtonText = 'Logging in...';
     $http({
       method: 'HEAD',
