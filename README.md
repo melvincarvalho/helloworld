@@ -92,10 +92,6 @@ Putting this simple functionality together in using the [AngularJS](https://angu
 
 The `$scope.notify` function returns a message to the user to tell them they have logged in or out.  This completes the functionality of this simple app.
 
-## Summary
-
-In this chapter we have shown how to identify and verify a user using delegated login and WebID.  We have packaged the code into an [AngularJS](https://angularjs.org/) app and presented a simple demo.  In the next chapter we will show how to save data to your Personal Online Data Store (Pod).
-
 ## See Also
 
 * [Source Code](https://github.com/melvincarvalho/helloworld)
