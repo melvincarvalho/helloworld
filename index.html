@@ -48,6 +48,7 @@
       solid.auth.trackSession(session => {
         const loggedIn = !!session
         $('#login').toggle(!loggedIn)
+        $('#register').toggle(!loggedIn)
         $('#logout').toggle(loggedIn)
         if (loggedIn) {
           $('#user').text(session.webId)
