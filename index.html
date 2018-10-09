@@ -14,9 +14,9 @@
         Hello Solid World
       </h1>
 
-      <p id="login">
-        <button class="button button is-info is-rounded">Log in</button>
-        <button target="_blank" class="button button is-info is-rounded">Register</button>
+      <p>
+        <button id="login" class="button button is-info is-rounded">Log in</button>
+        <button id="register" target="_blank" class="button button is-info is-rounded">Register</button>
       </p>
       <p id="logout">
         <a id="user" href="#"></a>
@@ -35,8 +35,14 @@
 
       // Log the user in and out on click
       const popupUri = 'popup.html'
-      $('#login  button').click(() => solid.auth.popupLogin({ popupUri }))
-      $('#logout button').click(() => solid.auth.logout())
+      $('#login').click(() => solid.auth.popupLogin({ popupUri }))
+      $('#logout').click(() => solid.auth.logout())
+
+      $('#register').click( () => {
+        window.open('https://solid.inrupt.com/get-a-solid-pod', 'Get a POD | Solid');
+        return false;
+      })
+
 
       // Update components to match the user's login status
       solid.auth.trackSession(session => {
