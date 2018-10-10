@@ -6,4 +6,4 @@
 
 # hello world for Solid apps
 
-Running live here: https://melvincarvalho.github.io/helloworld/
+[Demo](https://melvincarvalho.github.io/helloworld/) | [Codepen](https://codepen.io/melvincarvalho/pen/ReVpEX?editors=1000)
