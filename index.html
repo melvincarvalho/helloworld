@@ -15,17 +15,17 @@
         Hello Solid
       </h1>
 
-      <p id="login">
+      <section id="welcome">
         <hr>
         Do you have a Solid Pod?
         <hr>
-        <button class="button button is-info is-rounded">Log in</button>
+        <button id="login" class="button button is-info is-rounded">Log in</button>
         <hr>
         No, choose from the list of Pod Providers!
         <hr>
         <button id="register" target="_blank" class="button button is-info is-rounded">I Want a Solid Pod!</button>
         <hr>
-      </p>
+      </section>
       <p id="logout" style="display:none">
         <a id="user" target="_blank" href="#"></a>
         <br>
@@ -53,9 +53,9 @@
           $('#logout').show()                  
           $('#user').text(session.webId)
           $('#user').attr("href", session.webId)
-          $('#login').hide()                    
+          $('#welcome').hide()
         } else {
-          $('#login').show()
+          $('#welcome').show()
           $('#logout').hide()        
         }
       })
