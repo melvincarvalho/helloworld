@@ -47,17 +47,25 @@
 
       // Update components to match the user's login status
       solid.auth.trackSession(session => {
-        const loggedIn = !!session
-        $('#login').toggle(!loggedIn)
-        $('#register').toggle(!loggedIn)
-        $('#logout').toggle(loggedIn)
-        if (loggedIn) {
+        
+        if (session) {
+
+          $('#logout').show()        
+          
           $('#user').text(session.webId)
           $('#user').attr("href", session.webId)
           $('#user').attr("target", "_blank")
-          // Use the user's WebID as default profile
-          if (!$('#profile').val())
-            $('#profile').val(session.webId)
+
+          $('#login').hide()          
+          $('#register').hide()
+          
+        } else {
+
+          $('#login').show()
+          $('#register').show()          
+
+          $('#logout').hide()        
+
         }
       })
 
