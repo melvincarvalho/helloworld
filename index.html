@@ -53,11 +53,12 @@
 
       // Log the user in and out on click        
       function addListeners() {
+        // login and logout buttons
         const popupUri = 'https://melvincarvalho.github.io/helloworld/popup.html'
         $('#login').click(() => solid.auth.popupLogin({ popupUri }))
         $('#logout').click(() => solid.auth.logout())        
 
-        // Update components to match the user's login status
+        // login event
         solid.auth.trackSession(session => {        
           if (session && session.webId) {
             renderLogin(session.webId)
