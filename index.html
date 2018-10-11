@@ -1,27 +1,84 @@
-<nav class="navbar" role="navigation" aria-label="main navigation">
 
-  <div id="navbarBasicExample" class="navbar-menu">
-    <div class="navbar-start">
-      <a class="navbar-item">
-        Solid
-      </a>
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Join Solid</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.1/css/bulma.min.css">
+    <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+  </head>
+  <body>    
+    
+  <section class="section">
+    <div class="container">
+      <h1 class="title">
+        Welcome to Solid!
+      </h1>
 
-      <a class="navbar-item">
-        About
-      </a>
+      <section id="welcome">
+        <hr>
+        Do you have a Solid Pod?
+        <hr>
+        <button id="login" class="button button is-info is-rounded">Log in</button>
+        <hr>
+        No, choose from the list of Pod Providers!
+        <hr>
+        <a href="https://solid.inrupt.com/get-a-solid-pod" target="_blank" class="button button is-info is-rounded">I Want a Solid Pod!</a>
+        <hr>
+      </section>
+      
+      <section id="logout" style="display:none">
+        <hr>
+        <a id="user" target="_blank" href="#"></a>
+        <hr>
+        <button class="button button is-info is-rounded">Log out</button>        
+      </section>
+      
     </div>
+  </section>
 
-    <div class="navbar-end">
-      <div class="navbar-item">
-        <div class="buttons">
-          <a id="register" target="_blank" class="button is-primary">
-            <strong>Sign up</strong>
-          </a>
-          <a class="button is-light">
-            Log in
-          </a>
-        </div>
-      </div>
-    </div>
-  </div>
-</nav>    
+  <script src="https://melvincarvalho.github.io/helloworld/scripts/jquery.js"></script>
+  <script src="https://melvincarvalho.github.io/helloworld/scripts/solid-auth-client.bundle.js"></script>
+  <script src="https://melvincarvalho.github.io/helloworld/scripts/rdflib.min.js"></script>
+    
+  <script>
+    function renderLogin(webId) {
+      $('#logout').show()                  
+      $('#user').text(webId)
+      $('#user').attr("href", webId)
+      $('#welcome').hide()
+    }
+        
+    function renderLogout() {
+      $('#welcome').show()
+      $('#logout').hide()                
+    }
+        
+    function handleLogin() {
+      // login event
+      solid.auth.trackSession(session => {        
+        if (session && session.webId) {
+          renderLogin(session.webId)
+        } else {
+          renderLogout()
+        }
+      })                        
+    }
+
+    // Log the user in and out on click        
+    function addListeners() {
+      // login and logout buttons
+      const popupUri = 'https://melvincarvalho.github.io/helloworld/popup.html'
+      $('#login').click(() => solid.auth.popupLogin({ popupUri }))
+      $('#logout').click(() => solid.auth.logout()) 
+        
+      handleLogin()
+
+    }
+              
+    addListeners()      
+  </script>
+  
+  </body>
+</html>
