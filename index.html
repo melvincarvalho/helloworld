@@ -79,10 +79,8 @@
       
       // login and logout buttons
       const popupUri = 'https://melvincarvalho.github.io/helloworld/popup.html'
-      $('#login').click(() => solid.auth.popupLogin({ popupUri }))
-      $('#logout').click(() => solid.auth.logout()) 
       login.addEventListener('click', () => solid.auth.popupLogin({ popupUri }))
-      logout.addEventListener('click', () => solid.auth.logout)
+      logout.addEventListener('click', () => solid.auth.logout())
         
       handleLogin()
 
