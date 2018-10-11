@@ -38,27 +38,37 @@
       <script src="https://melvincarvalho.github.io/helloworld/scripts/rdflib.min.js"></script>
 
       <script>
-      // Log the user in and out on click
-      const popupUri = 'https://melvincarvalho.github.io/helloworld/popup.html'
-      $('#login').click(() => solid.auth.popupLogin({ popupUri }))
-      $('#logout').click(() => solid.auth.logout())
-      $('#register').click( () => {
-        window.open('https://solid.inrupt.com/get-a-solid-pod', 'Get a POD | Solid');
-        return false;
-      })
 
-      // Update components to match the user's login status
-      solid.auth.trackSession(session => {        
-        if (session) {
-          $('#logout').show()                  
-          $('#user').text(session.webId)
-          $('#user').attr("href", session.webId)
-          $('#welcome').hide()
-        } else {
-          $('#welcome').show()
-          $('#logout').hide()        
-        }
-      })
+      function renderLogin(webId) {
+        $('#logout').show()                  
+        $('#user').text(webId)
+        $('#user').attr("href", webId)
+        $('#welcome').hide()
+      }
+        
+      function renderLogout() {
+        $('#welcome').show()
+        $('#logout').hide()                
+      }
+
+      // Log the user in and out on click        
+      function addListeners() {
+        const popupUri = 'https://melvincarvalho.github.io/helloworld/popup.html'
+        $('#login').click(() => solid.auth.popupLogin({ popupUri }))
+        $('#logout').click(() => solid.auth.logout())        
+
+        // Update components to match the user's login status
+        solid.auth.trackSession(session => {        
+          if (session && session.webId) {
+            renderLogin(session.webId)
+          } else {
+            renderLogout()
+          }
+        })                
+      }
+                
+      addListeners()
+      
       </script>
 
     </div>
