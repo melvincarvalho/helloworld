@@ -9,10 +9,40 @@
     <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
   </head>
   <body>
+
+<nav class="navbar" role="navigation" aria-label="main navigation">
+
+  <div id="navbarBasicExample" class="navbar-menu">
+    <div class="navbar-start">
+      <a class="navbar-item">
+        Solid
+      </a>
+
+      <a class="navbar-item">
+        About
+      </a>
+    </div>
+
+    <div class="navbar-end">
+      <div class="navbar-item">
+        <div class="buttons">
+          <a id="register" target="_blank" class="button is-primary">
+            <strong>Sign up</strong>
+          </a>
+          <a class="button is-light">
+            Log in
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>    
+    
+    
   <section class="section">
     <div class="container">
       <h1 class="title">
-        Welcome to Solid!
+        Content goes here!
       </h1>
 
       <section id="welcome">
@@ -23,7 +53,7 @@
         <hr>
         No, choose from the list of Pod Providers!
         <hr>
-        <button id="register" target="_blank" class="button button is-info is-rounded">I Want a Solid Pod!</button>
+        <a href="https://solid.inrupt.com/get-a-solid-pod" target="_blank" class="button button is-info is-rounded">I Want a Solid Pod!</a>
         <hr>
       </section>
       
@@ -33,7 +63,7 @@
         <hr>
         <button class="button button is-info is-rounded">Log out</button>        
       </section>
-
+      
     </div>
   </section>
 
@@ -78,7 +108,6 @@
               
     addListeners()      
   </script>
-  
   
   </body>
 </html>
