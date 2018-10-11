@@ -36,48 +36,47 @@
       <script src="https://melvincarvalho.github.io/helloworld/scripts/jquery.js"></script>
       <script src="https://melvincarvalho.github.io/helloworld/scripts/solid-auth-client.bundle.js"></script>
       <script src="https://melvincarvalho.github.io/helloworld/scripts/rdflib.min.js"></script>
-
-      <script>
-
-      function renderLogin(webId) {
-        $('#logout').show()                  
-        $('#user').text(webId)
-        $('#user').attr("href", webId)
-        $('#welcome').hide()
-      }
-        
-      function renderLogout() {
-        $('#welcome').show()
-        $('#logout').hide()                
-      }
-        
-      function handleLogin() {
-        // login event
-        solid.auth.trackSession(session => {        
-          if (session && session.webId) {
-            renderLogin(session.webId)
-          } else {
-            renderLogout()
-          }
-        })                        
-      }
-
-      // Log the user in and out on click        
-      function addListeners() {
-        // login and logout buttons
-        const popupUri = 'https://melvincarvalho.github.io/helloworld/popup.html'
-        $('#login').click(() => solid.auth.popupLogin({ popupUri }))
-        $('#logout').click(() => solid.auth.logout()) 
-        
-        handleLogin()
-
-      }
-                
-      addListeners()
-      
-      </script>
-
     </div>
   </section>
+
+  <script>
+    function renderLogin(webId) {
+      $('#logout').show()                  
+      $('#user').text(webId)
+      $('#user').attr("href", webId)
+      $('#welcome').hide()
+    }
+        
+    function renderLogout() {
+      $('#welcome').show()
+      $('#logout').hide()                
+    }
+        
+    function handleLogin() {
+      // login event
+      solid.auth.trackSession(session => {        
+        if (session && session.webId) {
+          renderLogin(session.webId)
+        } else {
+          renderLogout()
+        }
+      })                        
+    }
+
+    // Log the user in and out on click        
+    function addListeners() {
+      // login and logout buttons
+      const popupUri = 'https://melvincarvalho.github.io/helloworld/popup.html'
+      $('#login').click(() => solid.auth.popupLogin({ popupUri }))
+      $('#logout').click(() => solid.auth.logout()) 
+        
+      handleLogin()
+
+    }
+              
+    addListeners()      
+  </script>
+  
+  
   </body>
 </html>
