@@ -1,4 +1,4 @@
-[![Stories in Ready](https://badge.waffle.io/melvincarvalho/helloworld.png?label=ready&title=Ready)](https://waffle.io/melvincarvalho/helloworld)
+[![Stories](https://badge.waffle.io/melvincarvalho/helloworld.png)](https://waffle.io/melvincarvalho/helloworld)
 
 # helloworld
 
