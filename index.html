@@ -1,93 +1,53 @@
-
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Join Solid</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.1/css/bulma.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css">
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" href="images/favicon.png">
   </head>
-  <body>    
-    
-  <section class="section">
-    <div class="container">
-      <h1 class="title">
-        Welcome to Solid!
-      </h1>
+  <body>
+    <section class="section">
+      <div class="container">
+        <h1 class="title">Welcome to Solid!</h1>
 
-      <section id="welcome">
-        <hr>
-        Do you have a Solid Pod?
-        <hr>
-        <button id="login" class="button button is-info is-rounded">Log in</button>
-        <hr>
-        No, choose from the list of Pod Providers!
-        <hr>
-        <a href="https://solid.inrupt.com/get-a-solid-pod" target="_blank" class="button button is-info is-rounded">I Want a Solid Pod!</a>
-        <hr>
-      </section>
-      
-      <section id="logout" style="display:none">
-        <hr>
-        <a id="user" target="_blank" href="#"></a>
-        <hr>
-        <button class="button button is-info is-rounded">Log out</button>        
-      </section>
-      
-    </div>
-  </section>
+        <section id="welcome">
+          <hr>
+          <p>Do you have a Solid Pod?</p>
+          <hr>
+          <div class="field">
+            <label class="label" for="idp">Identity Provider:</label>
+            <div class="control">
+              <input class="input" type="url" id="idp" value="https://login.inrupt.com" placeholder="https://login.inrupt.com">
+            </div>
+          </div>
+          <button id="login" class="button is-info is-rounded">Log in</button>
+          <hr>
+          <p>No Pod? Get one from a provider!</p>
+          <hr>
+          <a href="https://solidproject.org/users/get-a-pod" target="_blank" class="button is-info is-rounded">I Want a Solid Pod!</a>
+          <hr>
+        </section>
 
-  <script src="https://melvincarvalho.github.io/helloworld/scripts/solid-auth-client.bundle.js"></script>
-  <script src="https://melvincarvalho.github.io/helloworld/scripts/rdflib.min.js"></script>
-    
-  <script>
-    function renderLogin(webId) {
-      let logout = document.getElementById('logout')
-      let welcome = document.getElementById('welcome')
-      let user = document.getElementById('user')
+        <section id="logout" style="display:none">
+          <hr>
+          <p>Logged in as:</p>
+          <a id="user" target="_blank" href="#" class="has-text-link"></a>
+          <hr>
+          <button id="logout-btn" class="button is-info is-rounded">Log out</button>
+        </section>
 
-      logout.style.display = ''             
-      welcome.style.display = 'none'             
-      
-      user.textContent = webId
-      user.setAttribute('href', webId)
-    }
-        
-    function renderLogout() {
-      let logout = document.getElementById('logout')
-      let welcome = document.getElementById('welcome')
+        <section id="profile-section" style="display:none">
+          <hr>
+          <h2 class="subtitle">Your Profile</h2>
+          <p id="profile-name"></p>
+          <hr>
+        </section>
+      </div>
+    </section>
 
-      logout.style.display = 'none'             
-      welcome.style.display = ''             
-    }
-        
-    function handleLogin() {
-      // login event
-      solid.auth.trackSession(session => {        
-        if (session && session.webId) {
-          renderLogin(session.webId)
-        } else {
-          renderLogout()
-        }
-      })                        
-    }
-
-    // Log the user in and out on click        
-    function addListeners() {
-      let login = document.getElementById('login')
-      let logout = document.getElementById('logout')
-      
-      // login and logout buttons
-      const popupUri = 'https://melvincarvalho.github.io/helloworld/popup.html'
-      login.addEventListener('click', () => solid.auth.popupLogin({ popupUri }))
-      logout.addEventListener('click', () => solid.auth.logout())
-        
-      handleLogin()
-
-    }
-              
-    addListeners()      
-  </script>
-  
+    <script type="module" src="/src/main.js"></script>
   </body>
 </html>
