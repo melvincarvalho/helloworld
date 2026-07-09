@@ -1,20 +1,10 @@
 {
   "name": "solid-helloworld",
-  "version": "2.0.0",
-  "description": "A simple Solid app to get you started",
+  "version": "3.0.0",
+  "description": "A simple Solid app to get you started — zero build, zero dependencies",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview"
-  },
-  "dependencies": {
-    "@inrupt/solid-client": "^2.1.0",
-    "@inrupt/solid-client-authn-browser": "^2.3.0",
-    "@inrupt/vocab-common-rdf": "^1.0.5"
-  },
-  "devDependencies": {
-    "vite": "^6.0.3"
+    "dev": "npx serve ."
   },
   "keywords": [
     "solid",

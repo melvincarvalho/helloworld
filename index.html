@@ -7,6 +7,18 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css">
     <link rel="manifest" href="manifest.json">
     <link rel="icon" href="images/favicon.png">
+    <style>
+      #debug {
+        background: #263238;
+        color: #aed581;
+        padding: 1rem;
+        border-radius: 6px;
+        overflow-x: auto;
+        font-size: .875rem;
+        white-space: pre-wrap;
+        word-break: break-word;
+      }
+    </style>
   </head>
   <body>
     <section class="section">
@@ -45,9 +57,15 @@
           <p id="profile-name"></p>
           <hr>
         </section>
+
+        <section id="debug-section" style="display:none">
+          <h2 class="subtitle">Debug</h2>
+          <pre id="debug"></pre>
+          <hr>
+        </section>
       </div>
     </section>
 
-    <script type="module" src="/src/main.js"></script>
+    <script type="module" src="./main.js"></script>
   </body>
 </html>
