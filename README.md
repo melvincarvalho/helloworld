@@ -1,6 +1,8 @@
 # Solid Hello World
 
-A simple starter app for the [Solid](https://solidproject.org/) decentralized web platform.
+A simple starter app for the [Solid](https://solidproject.org/) decentralized
+web platform. **Zero build step, zero dependencies** — one HTML file, one JS
+file, served as-is.
 
 [Demo](https://melvincarvalho.github.io/helloworld/)
 
@@ -9,42 +11,40 @@ A simple starter app for the [Solid](https://solidproject.org/) decentralized we
 - Login with any Solid Identity Provider
 - Display your WebID
 - Fetch and display your profile name
+- Green debug panel showing each step of the auth + profile flow
 
 ## Tech Stack
 
-- [@inrupt/solid-client-authn-browser](https://www.npmjs.com/package/@inrupt/solid-client-authn-browser) - Authentication
-- [@inrupt/solid-client](https://www.npmjs.com/package/@inrupt/solid-client) - Data access
-- [Vite](https://vitejs.dev/) - Build tool
-- [Bulma](https://bulma.io/) - CSS framework
+- [solid-oidc](https://github.com/JavaScriptSolidServer/solid-oidc) — single-file,
+  zero-dependency Solid-OIDC auth (~4kb gzipped, Web Crypto, DPoP)
+- [Bulma](https://bulma.io/) — CSS framework (CDN)
 
 ## Getting Started
 
 ### Prerequisites
 
-- Node.js 18+
 - A Solid Pod ([get one here](https://solidproject.org/users/get-a-pod))
 
-### Install
+### Run
+
+No install, no build. Serve the directory statically:
 
 ```bash
-npm install
+npx serve .
+# or
+python3 -m http.server 3000
 ```
 
-### Development
+and open the printed URL. (Solid-OIDC needs a real origin, so serve over
+`http://` — opening `index.html` directly from `file://` won't work.)
 
-```bash
-npm run dev
-```
+## How it works
 
-Opens at http://localhost:3000
-
-### Build
-
-```bash
-npm run build
-```
-
-Output is in `dist/` folder.
+`main.js` creates a solid-oidc `Session`, handles the redirect back from the
+identity provider, and restores previous sessions from IndexedDB. Once logged
+in it fetches your WebID document with an authenticated request
+(`Accept: text/turtle`) and pulls out `foaf:name`. Every step is logged to the
+debug panel on the page.
 
 ## License
 
