@@ -4,67 +4,311 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Solid Hello World</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css">
-    <link rel="manifest" href="manifest.json">
-    <link rel="icon" href="images/favicon.png">
+    <meta name="description" content="Say hello to the decentralized web — log in with any Solid identity provider. Zero build, zero dependencies.">
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%237c4dff'/%3E%3Cstop offset='1' stop-color='%23b388ff'/%3E%3C/linearGradient%3E%3C/defs%3E%3Ccircle cx='50' cy='50' r='44' fill='url(%23g)'/%3E%3Ccircle cx='50' cy='50' r='20' fill='white'/%3E%3C/svg%3E">
     <style>
+      :root {
+        --accent: #7c4dff;
+        --accent-2: #b388ff;
+        --ink: #201d33;
+        --faint: #6f6a85;
+        --surface: rgba(255, 255, 255, .78);
+        --line: rgba(124, 77, 255, .18);
+        --term-bg: #263238;
+        --term-ink: #aed581;
+        color-scheme: light dark;
+      }
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --ink: #edeaf7;
+          --faint: #a49fc0;
+          --surface: rgba(30, 27, 50, .72);
+          --line: rgba(179, 136, 255, .22);
+        }
+      }
+      * { box-sizing: border-box; }
+      html, body { margin: 0; min-height: 100%; }
+      body {
+        font-family: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+        color: var(--ink);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1.5rem;
+        padding: clamp(1rem, 4vw, 3rem) 1rem 2rem;
+        background: linear-gradient(160deg, #f4f0ff, #e9f4ff 45%, #f8efff);
+        overflow-x: hidden;
+      }
+      @media (prefers-color-scheme: dark) {
+        body { background: linear-gradient(160deg, #17142b, #101a2e 45%, #1c1230); }
+      }
+      .orb {
+        position: fixed;
+        border-radius: 50%;
+        filter: blur(80px);
+        opacity: .5;
+        pointer-events: none;
+        z-index: -1;
+        animation: drift 24s ease-in-out infinite alternate;
+      }
+      .orb-1 { width: 44vmax; height: 44vmax; left: -12vmax; top: -14vmax; background: #b388ff; }
+      .orb-2 { width: 36vmax; height: 36vmax; right: -10vmax; bottom: -12vmax; background: #64b5f6; animation-delay: -12s; }
+      @keyframes drift {
+        from { transform: translate(0, 0) scale(1); }
+        to   { transform: translate(6vmax, 4vmax) scale(1.15); }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .orb { animation: none; }
+        .card, .terminal, footer { animation: none !important; }
+      }
+
+      .card {
+        width: min(28rem, 100%);
+        background: var(--surface);
+        backdrop-filter: blur(14px);
+        -webkit-backdrop-filter: blur(14px);
+        border: 1px solid var(--line);
+        border-radius: 20px;
+        padding: 2.2rem 2rem 1.8rem;
+        box-shadow: 0 20px 60px rgba(80, 40, 180, .16);
+        text-align: center;
+        animation: rise .5s ease-out both;
+      }
+      @keyframes rise {
+        from { opacity: 0; transform: translateY(14px); }
+        to   { opacity: 1; transform: none; }
+      }
+
+      .logo { width: 64px; height: 64px; margin: 0 auto .9rem; display: block; }
+      h1 { font-size: 1.7rem; margin: 0 0 .35rem; letter-spacing: -.02em; }
+      h1 .grad {
+        background: linear-gradient(90deg, var(--accent), #536dfe);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+      }
+      .tagline { color: var(--faint); margin: 0 0 1.6rem; font-size: .97rem; line-height: 1.5; }
+
+      label { display: block; text-align: left; font-size: .8rem; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; color: var(--faint); margin: 0 0 .4rem .1rem; }
+      select, input[type="url"] {
+        width: 100%;
+        font: inherit;
+        color: inherit;
+        padding: .7rem .9rem;
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        background: rgba(255, 255, 255, .6);
+        margin-bottom: .8rem;
+      }
+      @media (prefers-color-scheme: dark) {
+        select, input[type="url"] { background: rgba(20, 17, 40, .6); }
+      }
+      select:focus, input:focus, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+
+      button {
+        font: inherit;
+        cursor: pointer;
+        border: none;
+        border-radius: 999px;
+        padding: .8rem 1.6rem;
+        font-weight: 700;
+      }
+      .btn-primary {
+        width: 100%;
+        color: #fff;
+        background: linear-gradient(90deg, var(--accent), #536dfe);
+        box-shadow: 0 8px 22px rgba(124, 77, 255, .35);
+        transition: transform .15s ease, box-shadow .15s ease;
+      }
+      .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 28px rgba(124, 77, 255, .45); }
+      .btn-primary:active { transform: none; }
+      .btn-ghost {
+        background: transparent;
+        color: var(--faint);
+        border: 1px solid var(--line);
+        padding: .55rem 1.3rem;
+        margin-top: 1.2rem;
+      }
+      .btn-ghost:hover { color: var(--accent); border-color: var(--accent); }
+
+      .hint { font-size: .85rem; color: var(--faint); margin: 1rem 0 0; }
+      a { color: var(--accent); }
+
+      .avatar {
+        width: 84px; height: 84px;
+        border-radius: 50%;
+        margin: 0 auto 1rem;
+        display: grid;
+        place-items: center;
+        font-size: 2rem;
+        font-weight: 800;
+        color: #fff;
+        background: linear-gradient(135deg, var(--accent), #536dfe);
+        overflow: hidden;
+        box-shadow: 0 8px 22px rgba(124, 77, 255, .35);
+      }
+      .avatar img { width: 100%; height: 100%; object-fit: cover; }
+      #profile-name { font-size: 1.35rem; margin: 0 0 .6rem; }
+      .webid-chip {
+        display: inline-block;
+        max-width: 100%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        font-size: .8rem;
+        font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+        padding: .35rem .8rem;
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        text-decoration: none;
+      }
+      .webid-chip:hover { border-color: var(--accent); }
+
+      .terminal {
+        width: min(38rem, 100%);
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 14px 40px rgba(0, 0, 0, .25);
+        animation: rise .5s ease-out both;
+        text-align: left;
+      }
+      .term-bar {
+        display: flex;
+        align-items: center;
+        gap: .45rem;
+        padding: .55rem .8rem;
+        background: #1c262b;
+      }
+      .dot { width: .72rem; height: .72rem; border-radius: 50%; }
+      .dot.red { background: #ff5f57; } .dot.yellow { background: #febc2e; } .dot.green { background: #28c840; }
+      .term-title { margin-left: .4rem; color: #90a4ae; font-size: .78rem; font-family: ui-monospace, Menlo, monospace; }
       #debug {
-        background: #263238;
-        color: #aed581;
+        margin: 0;
         padding: 1rem;
-        border-radius: 6px;
-        overflow-x: auto;
-        font-size: .875rem;
+        min-height: 7rem;
+        max-height: 16rem;
+        overflow-y: auto;
+        background: var(--term-bg);
+        color: var(--term-ink);
+        font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+        font-size: .82rem;
+        line-height: 1.55;
         white-space: pre-wrap;
         word-break: break-word;
       }
+
+      .chips {
+        list-style: none;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: .6rem;
+        margin: 0;
+        padding: 0;
+        max-width: 40rem;
+        animation: rise .5s ease-out .1s both;
+      }
+      .chips li {
+        font-size: .82rem;
+        color: var(--faint);
+        background: var(--surface);
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        padding: .45rem 1rem;
+        backdrop-filter: blur(8px);
+      }
+      .chips strong { color: var(--ink); font-weight: 600; }
+
+      .explain {
+        text-align: left;
+        background: rgba(124, 77, 255, .07);
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        padding: 1rem 1.2rem;
+        margin-top: 1.4rem;
+      }
+      .explain h3 { margin: 0 0 .5rem; font-size: .95rem; }
+      .explain ol { margin: 0; padding-left: 1.2rem; }
+      .explain li { font-size: .86rem; color: var(--faint); margin: .35rem 0; line-height: 1.5; }
+      .explain code { font-family: ui-monospace, Menlo, monospace; font-size: .82em; color: var(--accent); }
+
+      footer {
+        color: var(--faint);
+        font-size: .84rem;
+        text-align: center;
+        animation: rise .5s ease-out .15s both;
+      }
+      footer a { text-decoration: none; }
+      footer a:hover { text-decoration: underline; }
+      [hidden] { display: none !important; }
     </style>
   </head>
   <body>
-    <section class="section">
-      <div class="container">
-        <h1 class="title">Welcome to Solid!</h1>
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
 
-        <section id="welcome">
-          <hr>
-          <p>Do you have a Solid Pod?</p>
-          <hr>
-          <div class="field">
-            <label class="label" for="idp">Identity Provider:</label>
-            <div class="control">
-              <input class="input" type="url" id="idp" value="https://login.inrupt.com" placeholder="https://login.inrupt.com">
-            </div>
-          </div>
-          <button id="login" class="button is-info is-rounded">Log in</button>
-          <hr>
-          <p>No Pod? Get one from a provider!</p>
-          <hr>
-          <a href="https://solidproject.org/users/get-a-pod" target="_blank" class="button is-info is-rounded">I Want a Solid Pod!</a>
-          <hr>
-        </section>
+    <main class="card">
+      <svg class="logo" viewBox="0 0 100 100" aria-hidden="true">
+        <defs>
+          <linearGradient id="lg" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#7c4dff"/><stop offset="1" stop-color="#536dfe"/>
+          </linearGradient>
+        </defs>
+        <circle cx="50" cy="50" r="44" fill="url(#lg)"/>
+        <circle cx="50" cy="50" r="21" fill="white"/>
+        <circle cx="50" cy="50" r="8" fill="url(#lg)"/>
+      </svg>
+      <h1>Solid <span class="grad">Hello World</span></h1>
 
-        <section id="logout" style="display:none">
-          <hr>
-          <p>Logged in as:</p>
-          <a id="user" target="_blank" href="#" class="has-text-link"></a>
-          <hr>
-          <button id="logout-btn" class="button is-info is-rounded">Log out</button>
-        </section>
+      <section id="welcome">
+        <p class="tagline">Your data, your pod, your web.<br>Log in and say hello to the decentralized web.</p>
+        <label for="idp-select">Identity provider</label>
+        <select id="idp-select">
+          <option value="https://solidweb.app" selected>solidweb.app</option>
+          <option value="https://solidcommunity.net">solidcommunity.net</option>
+          <option value="https://login.inrupt.com">login.inrupt.com</option>
+          <option value="custom">Custom…</option>
+        </select>
+        <input type="url" id="idp-custom" hidden placeholder="https://your-provider.example">
+        <button id="login" class="btn-primary">Log in with Solid</button>
+        <p class="hint">No pod yet? <a href="https://solidproject.org/users/get-a-pod" target="_blank" rel="noopener">Get one free</a></p>
+      </section>
 
-        <section id="profile-section" style="display:none">
-          <hr>
-          <h2 class="subtitle">Your Profile</h2>
-          <p id="profile-name"></p>
-          <hr>
-        </section>
+      <section id="session" hidden>
+        <div id="avatar" class="avatar" aria-hidden="true"></div>
+        <h2 id="profile-name">&hellip;</h2>
+        <a id="user" class="webid-chip" target="_blank" rel="noopener" href="#"></a>
+        <div class="explain">
+          <h3>What just happened?</h3>
+          <ol>
+            <li>You authenticated with <em>your</em> identity provider — this app never saw a password (Solid-OIDC&nbsp;+&nbsp;DPoP).</li>
+            <li>The app fetched your <a href="https://solidproject.org/faqs#what-is-a-webid" target="_blank" rel="noopener">WebID profile</a> — a document you own, on your pod.</li>
+            <li>Your name and photo came from that profile as linked data (<code>foaf:name</code>) — watch it happen in the log below.</li>
+          </ol>
+        </div>
+        <button id="logout-btn" class="btn-ghost">Log out</button>
+      </section>
+    </main>
 
-        <section id="debug-section" style="display:none">
-          <h2 class="subtitle">Debug</h2>
-          <pre id="debug"></pre>
-          <hr>
-        </section>
+    <ul class="chips" aria-label="Why Solid">
+      <li>Your data lives in <strong>your pod</strong></li>
+      <li>Log in with <strong>any provider</strong></li>
+      <li>Open standards: <strong>WebID&nbsp;&middot;&nbsp;OIDC&nbsp;&middot;&nbsp;RDF</strong></li>
+    </ul>
+
+    <section id="debug-section" class="terminal" hidden aria-label="Debug log">
+      <div class="term-bar">
+        <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
+        <span class="term-title">debug — solid-oidc session</span>
       </div>
+      <pre id="debug"></pre>
     </section>
+
+    <footer>
+      zero build &middot; zero dependencies &middot;
+      <a href="https://github.com/melvincarvalho/helloworld" target="_blank" rel="noopener">source code</a> &middot;
+      powered by <a href="https://github.com/JavaScriptSolidServer/solid-oidc" target="_blank" rel="noopener">solid-oidc</a>
+    </footer>
 
     <script type="module" src="./main.js"></script>
   </body>

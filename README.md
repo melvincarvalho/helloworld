@@ -8,16 +8,20 @@ file, served as-is.
 
 ## Features
 
-- Login with any Solid Identity Provider
-- Display your WebID
-- Fetch and display your profile name
-- Green debug panel showing each step of the auth + profile flow
+- Login with any Solid Identity Provider (defaults to
+  [solidweb.app](https://solidweb.app), with solidcommunity.net,
+  login.inrupt.com, or a custom URL a click away)
+- Display your name, photo, and WebID from your pod profile
+- "What just happened?" explainer — makes the demo self-narrating for
+  first-time audiences
+- Green debug terminal showing every step of the auth + profile flow live
+- Polished, responsive UI with light/dark mode — no CSS framework
 
 ## Tech Stack
 
 - [solid-oidc](https://github.com/JavaScriptSolidServer/solid-oidc) — single-file,
   zero-dependency Solid-OIDC auth (~4kb gzipped, Web Crypto, DPoP)
-- [Bulma](https://bulma.io/) — CSS framework (CDN)
+- Hand-rolled CSS (~250 lines, inline) — no framework
 
 ## Getting Started
 
