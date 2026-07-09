@@ -9,20 +9,22 @@ import { Session } from 'https://esm.sh/gh/JavaScriptSolidServer/solid-oidc/soli
 
 // DOM elements
 const welcomeSection = document.getElementById('welcome')
-const logoutSection = document.getElementById('logout')
-const profileSection = document.getElementById('profile-section')
+const sessionSection = document.getElementById('session')
 const debugSection = document.getElementById('debug-section')
 const debugEl = document.getElementById('debug')
+const avatarEl = document.getElementById('avatar')
 const userLink = document.getElementById('user')
 const profileName = document.getElementById('profile-name')
 const loginBtn = document.getElementById('login')
 const logoutBtn = document.getElementById('logout-btn')
-const idpInput = document.getElementById('idp')
+const idpSelect = document.getElementById('idp-select')
+const idpCustom = document.getElementById('idp-custom')
 
-// Append a timestamped line to the green debug panel (visible after login)
+// Append a timestamped line to the green debug terminal (visible after login)
 function debug(message) {
   const ts = new Date().toLocaleTimeString()
   debugEl.textContent += `[${ts}] ${message}\n`
+  debugEl.scrollTop = debugEl.scrollHeight
 }
 
 const session = new Session({
@@ -36,10 +38,9 @@ const session = new Session({
 
 // Render logged-in state
 function renderLogin(webId) {
-  welcomeSection.style.display = 'none'
-  logoutSection.style.display = ''
-  profileSection.style.display = ''
-  debugSection.style.display = ''
+  welcomeSection.hidden = true
+  sessionSection.hidden = false
+  debugSection.hidden = false
   userLink.textContent = webId
   userLink.href = webId
   loadProfile(webId)
@@ -47,20 +48,42 @@ function renderLogin(webId) {
 
 // Render logged-out state
 function renderLogout() {
-  welcomeSection.style.display = ''
-  logoutSection.style.display = 'none'
-  profileSection.style.display = 'none'
-  debugSection.style.display = 'none'
+  welcomeSection.hidden = false
+  sessionSection.hidden = true
+  debugSection.hidden = true
   debugEl.textContent = ''
+  avatarEl.textContent = ''
   userLink.textContent = ''
-  profileName.textContent = ''
+  profileName.textContent = '…'
 }
 
-// Good enough for a hello world: pull the first foaf:name literal out of the
-// profile Turtle without an RDF parser.
+// Good enough for a hello world: pull values out of the profile Turtle with
+// regexes instead of an RDF parser.
 function extractName(turtle) {
   const m = turtle.match(/(?:foaf:name|<http:\/\/xmlns\.com\/foaf\/0\.1\/name>)\s+"([^"]*)"/)
   return m ? m[1] : null
+}
+
+function extractPhoto(turtle) {
+  const m = turtle.match(/(?:vcard:hasPhoto|foaf:img|foaf:depiction|<http:\/\/www\.w3\.org\/2006\/vcard\/ns#hasPhoto>|<http:\/\/xmlns\.com\/foaf\/0\.1\/(?:img|depiction)>)\s+<(https:\/\/[^>]+)>/)
+  return m ? m[1] : null
+}
+
+function renderAvatar(name, photo) {
+  avatarEl.textContent = ''
+  if (photo) {
+    const img = document.createElement('img')
+    img.alt = ''
+    img.onerror = () => { avatarEl.textContent = initial(name) }
+    img.src = photo
+    avatarEl.append(img)
+  } else {
+    avatarEl.textContent = initial(name)
+  }
+}
+
+function initial(name) {
+  return name ? [...name][0].toUpperCase() : '?'
 }
 
 // Load and display profile data
@@ -76,19 +99,33 @@ async function loadProfile(webId) {
     debug(`profile document: ${turtle.length} chars`)
     const name = extractName(turtle)
     debug(name ? `foaf:name: "${name}"` : 'no foaf:name found in profile')
-    profileName.textContent = `Name: ${name ?? 'Name not found'}`
+    const photo = extractPhoto(turtle)
+    debug(photo ? `photo: ${photo}` : 'no profile photo found')
+    profileName.textContent = name ?? 'Anonymous'
+    renderAvatar(name, photo)
   } catch (error) {
     console.error('Error loading profile:', error)
     debug(`profile fetch failed: ${error.message}`)
-    profileName.textContent = 'Could not load profile data'
+    profileName.textContent = 'Could not load profile'
+    renderAvatar(null, null)
   }
+}
+
+// Identity provider selection
+idpSelect.addEventListener('change', () => {
+  idpCustom.hidden = idpSelect.value !== 'custom'
+  if (!idpCustom.hidden) idpCustom.focus()
+})
+
+function getIssuer() {
+  return (idpSelect.value === 'custom' ? idpCustom.value : idpSelect.value).trim()
 }
 
 // Handle login button click
 loginBtn.addEventListener('click', async () => {
-  const issuer = idpInput.value.trim()
+  const issuer = getIssuer()
   if (!issuer) {
-    alert('Please enter an Identity Provider URL')
+    alert('Please enter an identity provider URL')
     return
   }
   try {
